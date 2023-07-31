@@ -1,5 +1,21 @@
 [![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
+
 # Проект Mesto фронтенд + бэкенд
+
+Проект одностраничного сайта "**Место**", демострирующий возможности серерной разработки на node.js,
+реализованный в рамках проектной работы(ПР) № 13 курса [«Веб-разработчик»](https://practicum.yandex.ru/web/) в [Яндекс Практикум](https://practicum.yandex.ru/).
+
+## Используемые технологии
+
+В проектете демострируются следующие технологии:
+* node.js
+* express
+* mongodb
+
+## Функционал
+В проекте реализован следующий функционал:
+* Добавление, реадктирование пользователей
+* Добавление, реадктирование, лайк карточек
 
 
 ## Директории
@@ -14,3 +30,10 @@
 
 `npm run start` — запускает сервер   
 `npm run dev` — запускает сервер с hot-reload
+
+## Репозиторий проекта
+
+[github](https://github.com/KPVakhrushev/express-mesto-gha/)
+
+## Планы по доработке проекта
+В ПР 14 будет реализована авторизация пользователей
