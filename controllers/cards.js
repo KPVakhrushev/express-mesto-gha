@@ -44,3 +44,8 @@ module.exports.dislikeCard = (req, res, next) => {
     .then(card =>sendCardOrError(card, res, next))
     .catch(next);
 }
+module.exports.deleteCard = (req, res, next) => {
+  Card.findByIdAndDelete(req.params.cardId)
+    .then(card =>sendCardOrError(card, res, next))
+    .catch(next);
+}

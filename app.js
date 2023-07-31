@@ -17,7 +17,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
-  req.user = {_id: '74c2b57f95a0a74cd12a02c2'};
+  req.user = {_id: '64c2b57f95a0a74cd12a02c2'};
   next();
 });
 app.use('/', usersRouter);
