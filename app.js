@@ -33,7 +33,7 @@ app.use((err, req, res, next) => {
     throw new ErrorDefault();
   } else next(err);
 });
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   res.status(err.code).send({ message: err.message });
 });
 
