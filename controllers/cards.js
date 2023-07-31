@@ -1,16 +1,12 @@
 const Card = require('../models/card');
 const ErrorNotfound = require('../errors/ErrorNotfound');
+const httpCodes = require('../utils/constants');
 
-const sendCardOrError = function (card, res, next) {
+const sendCardOrError = (card, res, next) => {
   if (card) res.send(card);
   else next(new ErrorNotfound('Card not found'));
 };
-class CardError extends Error {
-  constructor(message, code) {
-    super(message);
-    this.code = code;
-  }
-}
+
 module.exports.getCard = (req, res, next) => {
   Card.findById(req.params.cardId)
     .then((card) => sendCardOrError(card, res, next))
@@ -24,7 +20,7 @@ module.exports.getCards = (req, res, next) => {
 module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
-    .then((card) => res.send(card))
+    .then((card) => res.status(httpCodes.created).send(card))
     .catch(next);
 };
 module.exports.likeCard = (req, res, next) => {

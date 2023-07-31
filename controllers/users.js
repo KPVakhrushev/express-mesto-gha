@@ -1,14 +1,15 @@
 const User = require('../models/user');
 const ErrorNotfound = require('../errors/ErrorNotfound');
+const httpCodes = require('../utils/constants');
 
-const sendUserOrError = function (user, res, next) {
+const sendUserOrError = (user, res, next) => {
   if (user) res.send(user);
   else next(new ErrorNotfound('User not found'));
 };
 module.exports.createUser = (req, res, next) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
-    .then((user) => res.send(user))
+    .then((user) => res.status(httpCodes.created).send(user))
     .catch(next);
 };
 

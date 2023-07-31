@@ -1,7 +1,8 @@
-module.exports = class ErrorVlidation extends Error {
-  code = 500;
+const httpCodes = require('../utils/constants');
 
-  constructor(message) {
-    super('На сервере произошла ошибка');
+module.exports = class ErrorVlidation extends Error {
+  constructor(message = 'На сервере произошла ошибка') {
+    super(message);
+    this.code = httpCodes.serverError;
   }
 };

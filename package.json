@@ -13,13 +13,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "//": "Модуль dotenv используется в скрипте dev для подключения .env файла с переменной окружения DB_CONNECTION",
     "dotenv": "^16.3.1",
-    "eslint": "^8.45.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-react": "^7.33.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2",
     "nodemon": "^3.0.1"
   },
   "dependencies": {

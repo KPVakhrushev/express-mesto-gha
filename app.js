@@ -24,16 +24,16 @@ app.use(() => { throw new ErrorNotfound('Страница не найдена');
 app.use((err, req, res, next) => {
   console.log('ERROR: ', err.message);
   if (!err.code) {
-    if (err.name == 'CastError') {
+    if (err.name === 'CastError') {
       throw new ErrorValidation(err.message);
     }
-    if (err.name == 'ValidationError') {
+    if (err.name === 'ValidationError') {
       throw new ErrorValidation(err.message);
     }
     throw new ErrorDefault();
   } else next(err);
 });
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   res.status(err.code).send({ message: err.message });
 });
 

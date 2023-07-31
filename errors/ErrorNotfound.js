@@ -1,3 +1,8 @@
+const httpCodes = require('../utils/constants');
+
 module.exports = class ErrorNotfound extends Error {
-  code = 404;
+  constructor(message) {
+    super(message);
+    this.code = httpCodes.notfound;
+  }
 };
