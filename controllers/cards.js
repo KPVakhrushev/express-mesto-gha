@@ -1,6 +1,6 @@
 const Card = require('../models/card');
 const ErrorNotfound = require('../errors/ErrorNotfound');
-const httpCodes = require('../utils/constants');
+const { httpCodes } = require('../utils/constants');
 
 const sendCardOrError = (card, res, next) => {
   if (card) res.send(card);

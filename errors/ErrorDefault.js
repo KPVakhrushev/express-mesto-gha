@@ -1,4 +1,4 @@
-const httpCodes = require('../utils/constants');
+const { httpCodes } = require('../utils/constants');
 
 module.exports = class ErrorVlidation extends Error {
   constructor(message = 'На сервере произошла ошибка') {

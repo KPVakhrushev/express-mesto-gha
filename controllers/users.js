@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const ErrorNotfound = require('../errors/ErrorNotfound');
-const httpCodes = require('../utils/constants');
+const { httpCodes } = require('../utils/constants');
 
 const sendUserOrError = (user, res, next) => {
   if (user) res.send(user);
