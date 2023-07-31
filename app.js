@@ -33,8 +33,9 @@ app.use((err, req, res, next) => {
     throw new ErrorDefault();
   } else next(err);
 });
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   res.status(err.code).send({ message: err.message });
+  next();
 });
 
 app.listen(PORT, () => {
