@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 
-mongoose.connect('mongodb://192.168.3.3:27017/mesto');
+mongoose.connect('mongodb://localhost:27017/mestodb');
 
 // Слушаем 3000 порт
 const { PORT = 3000 } = process.env;
