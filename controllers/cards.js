@@ -1,4 +1,9 @@
 const Card = require('../models/card');
+const ErrorNotfound = require('../errors/ErrorNotfound');
+const sendCardOrError = function(card, res, next){
+  if(card) res.send(card)
+  else next(new ErrorNotfound("Card not found"));
+}
 class CardError extends Error {
   constructor(message, code) {
     super(message);
@@ -7,8 +12,8 @@ class CardError extends Error {
 }
 module.exports.getCard = (req, res, next) => {
   Card.findById(req.params.cardId)
-    .then(card =>res.send(card))
-    .catch(err => next(new CardError("Карточка не найдена",404)));
+    .then(card =>sendCardOrError(card, res, next))
+    .catch(next);
 }
 module.exports.getCards = (req, res, next) => {
   Card.find({})
@@ -27,7 +32,7 @@ module.exports.likeCard = (req, res, next) => {
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
-    .then(card => res.send(card))
+    .then(card =>sendCardOrError(card, res, next))
     .catch(next);
 }
 module.exports.dislikeCard = (req, res, next) => {
@@ -36,6 +41,6 @@ module.exports.dislikeCard = (req, res, next) => {
     { $pull: { likes: req.user._id } },
     { new: true },
   )
-    .then(card => res.send(card))
+    .then(card =>sendCardOrError(card, res, next))
     .catch(next);
 }
