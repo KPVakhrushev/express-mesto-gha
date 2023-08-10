@@ -10,6 +10,7 @@ const { createUser, login } = require('./controllers/users');
 const ErrorValidation = require('./errors/ErrorValidation');
 const ErrorNotfound = require('./errors/ErrorNotfound');
 const ErrorDefault = require('./errors/ErrorDefault');
+const validationUser = require('./validations/user');
 
 const auth = require('./middlewares/auth');
 
@@ -26,7 +27,7 @@ app.use(cookieParser());
 mongoose.connect(DB_CONNECTION); // mongoose.set('debug', true);
 
 app.post('/signin', login);
-app.post('/signup', createUser);
+app.post('/signup', validationUser.getCelebrate(), validationUser.errors(), createUser);
 
 app.use(auth);
 app.use('/users', usersRouter);
