@@ -1,18 +1,28 @@
+const httpConstants = require('http2').constants;
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const ErrorNotfound = require('../errors/ErrorNotfound');
-const { httpCodes } = require('../utils/constants');
+const ErrorConflict = require('../errors/ErrorConflict');
+const ErrorUnauthorized = require('../errors/ErrorUnauthorized');
+const { SECRET, TOKEN_EXPIRES_IN } = require('../utils/constants');
 
 const sendUserOrError = (user, res, next) => {
   if (user) res.send(user);
   else next(new ErrorNotfound('User not found'));
 };
 module.exports.createUser = (req, res, next) => {
-  const { name, about, avatar } = req.body;
-  User.create({ name, about, avatar })
-    .then((user) => res.status(httpCodes.created).send(user))
-    .catch(next);
-};
+  const {
+    email, name, about, avatar, password,
+  } = req.body;
 
+  bcrypt.hash(password, 10)
+    .then((hash) => User.create({
+      email, name, about, avatar, password: hash,
+    }))
+    .then((user) => res.status(httpConstants.HTTP_STATUS_CREATED).send(user))
+    .catch((err) => next(err.code === 11000 ? new ErrorConflict('Пользователь c таким email уже зарегистрирован') : err));
+};
 module.exports.getUser = (req, res, next) => {
   User.findById(req.params.userId)
     .then((user) => sendUserOrError(user, res, next))
@@ -23,7 +33,6 @@ module.exports.getUsers = (req, res, next) => {
     .then((users) => res.send(users))
     .catch(next);
 };
-
 module.exports.updateUser = (req, res, next) => {
   const { name, about } = req.body;
   User.findOneAndUpdate({ _id: req.user._id }, { name, about }, { new: true, runValidators: true })
@@ -34,5 +43,16 @@ module.exports.updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
   User.findOneAndUpdate({ _id: req.user._id }, { avatar }, { new: true, runValidators: true })
     .then((user) => sendUserOrError(user, res, next))
+    .catch(next);
+};
+module.exports.login = (req, res, next) => {
+  const { email, password } = req.body;
+  User.findOne({ email }).select('password')
+    .then((user) => {
+      const authenticated = user && bcrypt.compareSync(password, user.password);
+      if (!authenticated) throw new ErrorUnauthorized();
+      const token = jwt.sign({ _id: user._id }, SECRET, { expiresIn: TOKEN_EXPIRES_IN });
+      res.cookie('jwt', token, { maxAge: TOKEN_EXPIRES_IN * 1000, httpOnly: true }).end();
+    })
     .catch(next);
 };

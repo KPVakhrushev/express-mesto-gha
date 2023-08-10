@@ -1,8 +1,8 @@
-const { httpCodes } = require('../utils/constants');
+const httpConstants = require('http2').constants;
 
 module.exports = class ErrorValidation extends Error {
   constructor(message) {
     super(message);
-    this.code = httpCodes.badRequest;
+    this.code = httpConstants.HTTP_STATUS_BAD_REQUEST;
   }
 };

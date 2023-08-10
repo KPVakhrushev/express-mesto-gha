@@ -1,25 +1,36 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+
 const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
+const { createUser, login } = require('./controllers/users');
 
 const ErrorValidation = require('./errors/ErrorValidation');
 const ErrorNotfound = require('./errors/ErrorNotfound');
 const ErrorDefault = require('./errors/ErrorDefault');
 
-const { PORT = 3000, DB_CONNECTION = 'mongodb://localhost:27017/mydb' } = process.env;
-mongoose.connect(DB_CONNECTION);
+const auth = require('./middlewares/auth');
+
+const {
+  PORT = 3000,
+  DB_CONNECTION = 'mongodb://localhost:27017/mydb',
+} = process.env;
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use((req, res, next) => {
-  req.user = { _id: '64c2b57f95a0a74cd12a02c2' };
-  next();
-});
-app.use('/', usersRouter);
-app.use('/', cardsRouter);
+app.use(cookieParser());
+
+mongoose.connect(DB_CONNECTION); // mongoose.set('debug', true);
+
+app.post('/signin', login);
+app.post('/signup', createUser);
+
+app.use(auth);
+app.use('/users', usersRouter);
+app.use('/cards', cardsRouter);
 app.use(() => { throw new ErrorNotfound('Страница не найдена'); });
 app.use((err, req, res, next) => {
   console.log('ERROR: ', err.message);

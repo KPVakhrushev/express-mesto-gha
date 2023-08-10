@@ -1,8 +1,4 @@
 module.exports = {
-  httpCodes: {
-    created: 201,
-    badRequest: 400,
-    notfound: 404,
-    serverError: 500,
-  },
+  SECRET: 'f7f771efa56911aceec629d56552158b9c750586b7e7a9dba6257a3911c793ca',
+  TOKEN_EXPIRES_IN: 3600 * 24 * 7,
 };
