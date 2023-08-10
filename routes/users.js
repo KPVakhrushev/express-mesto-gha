@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {
-  createUser, getUser, getUsers, updateUser, updateAvatar,
+  createUser, getMe, getUser, getUsers, updateUser, updateAvatar,
 } = require('../controllers/users');
 const validation = require('../validations/user');
 const valiadtionId = require('../validations/objectId');
@@ -14,7 +14,7 @@ router.route('/')
   .patch(fullCheck, createUser);
 
 router.route('/me')
-  .get(getUser)
+  .get(getMe)
   .patch(updateCheck, updateUser);
 
 router.get('/:userId', idCheck, getUser);

@@ -11,6 +11,11 @@ const sendUserOrError = (user, res, next) => {
   if (user) res.send(user);
   else next(new ErrorNotfound('User not found'));
 };
+const getUserById = function (id, req, res, next) {
+  User.findById(id)
+    .then((user) => sendUserOrError(user, res, next))
+    .catch(next);
+};
 module.exports.createUser = (req, res, next) => {
   const {
     email, name, about, avatar, password,
@@ -24,9 +29,10 @@ module.exports.createUser = (req, res, next) => {
     .catch((err) => next(err.code === 11000 ? new ErrorConflict('Пользователь c таким email уже зарегистрирован') : err));
 };
 module.exports.getUser = (req, res, next) => {
-  User.findById(req.params.userId)
-    .then((user) => sendUserOrError(user, res, next))
-    .catch(next);
+  getUserById(req.params.userId, req, res, next);
+};
+module.exports.getMe = (req, res, next) => {
+  getUserById(req.user._id, req, res, next);
 };
 module.exports.getUsers = (req, res, next) => {
   User.find({})
@@ -52,7 +58,7 @@ module.exports.login = (req, res, next) => {
       const authenticated = user && bcrypt.compareSync(password, user.password);
       if (!authenticated) throw new ErrorUnauthorized();
       const token = jwt.sign({ _id: user._id }, SECRET, { expiresIn: TOKEN_EXPIRES_IN });
-      res.cookie('jwt', token, { maxAge: TOKEN_EXPIRES_IN * 1000, httpOnly: true }).end();
+      res.cookie('jwt', token, { maxAge: TOKEN_EXPIRES_IN * 1000, httpOnly: true }).send(user);
     })
     .catch(next);
 };
