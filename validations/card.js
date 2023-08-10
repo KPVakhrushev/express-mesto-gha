@@ -1,10 +1,12 @@
 const {
   Joi, celebrate, Segments, errors,
 } = require('celebrate');
+const { URL_REGEX } = require('../utils/constants');
 
 const keys = {
   name: Joi.string().required().min(2).max(30),
-  link: Joi.string().required().uri(),
+  link: Joi.string().required().uri().pattern(URL_REGEX)
+    .messages({ '*': 'Invalid URL' }),
 };
 
 module.exports = {
