@@ -14,11 +14,11 @@ router.route('/')
   .post(...midlewares, createCard);
 
 router.route('/:cardId')
-  .get(getCard)
+  .get(...midlewaresId, getCard)
   .delete(...midlewaresId, deleteCard);
 
 router.route('/:cardId/likes')
-  .put(likeCard)
+  .put(...midlewaresId, likeCard)
   .delete(...midlewaresId, dislikeCard);
 
 module.exports = router;

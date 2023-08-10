@@ -29,9 +29,8 @@ mongoose.connect(DB_CONNECTION); // mongoose.set('debug', true);
 app.post('/signin', login);
 app.post('/signup', validationUser.getCelebrate(), validationUser.errors(), createUser);
 
-app.use(auth);
-app.use('/users', usersRouter);
-app.use('/cards', cardsRouter);
+app.use('/users', auth, usersRouter);
+app.use('/cards', auth, cardsRouter);
 app.use(() => { throw new ErrorNotfound('Страница не найдена'); });
 app.use((err, req, res, next) => {
   console.log('ERROR: ', err.message);
