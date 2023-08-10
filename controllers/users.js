@@ -11,7 +11,7 @@ const sendUserOrError = (user, res, next) => {
   if (user) res.send(user);
   else next(new ErrorNotfound('User not found'));
 };
-const getUserById = function (id, req, res, next) {
+const getUserById = (id, req, res, next) => {
   User.findById(id)
     .then((user) => sendUserOrError(user, res, next))
     .catch(next);
