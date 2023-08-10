@@ -26,8 +26,8 @@ app.use(cookieParser());
 
 mongoose.connect(DB_CONNECTION); // mongoose.set('debug', true);
 
-app.post('/signin', login);
-app.post('/signup', validationUser.getCelebrate(), validationUser.errors(), createUser);
+app.post('/signin', validationUser.authCheck(), validationUser.errors(), login);
+app.post('/signup', validationUser.fullCheck(), validationUser.errors(), createUser);
 
 app.use('/users', auth, usersRouter);
 app.use('/cards', auth, cardsRouter);

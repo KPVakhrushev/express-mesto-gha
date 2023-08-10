@@ -5,18 +5,19 @@ const {
 const validation = require('../validations/user');
 const valiadtionId = require('../validations/objectId');
 
-const midlewares = [validation.getCelebrate(), validation.errors()];
-const midlewaresId = [valiadtionId.getCelebrate('cardId'), validation.errors()];
+const fullCheck = [validation.fullCheck(), validation.errors()];
+const updateCheck = [validation.updateCheck(), validation.errors()];
+const idCheck = [valiadtionId.check('userId'), validation.errors()];
 
 router.route('/')
   .get(getUsers)
-  .patch(...midlewares, createUser);
+  .patch(fullCheck, createUser);
 
 router.route('/me')
   .get(getUser)
-  .patch(...midlewares, updateUser);
+  .patch(updateCheck, updateUser);
 
-router.get('/:userId', ...midlewaresId, getUser);
-router.patch('/me/avatar', updateAvatar);
+router.get('/:userId', idCheck, getUser);
+router.patch('/me/avatar', updateCheck, updateAvatar);
 
 module.exports = router;

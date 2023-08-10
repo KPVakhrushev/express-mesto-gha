@@ -9,7 +9,7 @@ const keys = {
 
 module.exports = {
   ...keys,
-  getCelebrate: () => celebrate({
+  check: () => celebrate({
     [Segments.BODY]: Joi.object().keys(keys),
   }),
   errors,

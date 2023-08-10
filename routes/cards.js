@@ -6,19 +6,19 @@ const {
 const validation = require('../validations/card');
 const valiadtionId = require('../validations/objectId');
 
-const midlewares = [validation.getCelebrate(), validation.errors()];
-const midlewaresId = [valiadtionId.getCelebrate('cardId'), validation.errors()];
+const fullCheck = [validation.check(), validation.errors()];
+const idCheck = [valiadtionId.check('cardId'), validation.errors()];
 
 router.route('/')
   .get(getCards)
-  .post(...midlewares, createCard);
+  .post(fullCheck, createCard);
 
 router.route('/:cardId')
-  .get(...midlewaresId, getCard)
-  .delete(...midlewaresId, deleteCard);
+  .get(idCheck, getCard)
+  .delete(idCheck, deleteCard);
 
 router.route('/:cardId/likes')
-  .put(...midlewaresId, likeCard)
-  .delete(...midlewaresId, dislikeCard);
+  .put(idCheck, likeCard)
+  .delete(idCheck, dislikeCard);
 
 module.exports = router;
