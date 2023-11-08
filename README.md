@@ -32,9 +32,11 @@
 `npm run start` — запускает сервер   
 `npm run dev` — запускает сервер с hot-reload
 
-## Репозиторий проекта
+## **Демонстрация**
 
-[github](https://github.com/KPVakhrushev/express-mesto-gha/)
+[Демо-сайт](https://mesto.kavay.ru/)
 
 ## Планы по доработке проекта
-В ПР 15 будет реализована совместная работа frontend и backend частей приложения
+Заключительным этапом разработки проекта Mesto является совмещение backend и frontend.
+Изменений в данном репозитории далее не планируется.
+Дальнейшие работы ведутя в репозитории  [yp-7-mesto-full-application](https://github.com/KPVakhrushev/yp-7-mesto-full-application)
