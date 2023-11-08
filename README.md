@@ -39,4 +39,4 @@
 ## Планы по доработке проекта
 Заключительным этапом разработки проекта Mesto является совмещение backend и frontend.
 Изменений в данном репозитории далее не планируется.
-Дальнейшие работы ведутя в репозитории  [yp-7-mesto-full-application](https://github.com/KPVakhrushev/yp-7-mesto-full-application)
+Дальнейшие работы ведутся в репозитории  [yp-7-mesto-full-application](https://github.com/KPVakhrushev/yp-7-mesto-full-application)
